@@ -75,9 +75,9 @@ client.on("message", (message) => {
         message.channel.startTyping()
         //  if(require.cache[require.resolve(__dirname+"/commands/"+cmd+".js")]){
         delete require.cache[require.resolve(__dirname + "/commands/" + cmd + ".js")]
-
+        setTimeout(()=>{message.channel.stopTyping()},3000)
         require(__dirname + "/commands/" + cmd + ".js")(args, message)
-        message.channel.stopTyping()
+
       }
     } catch (e) {
       return console.error(e)
