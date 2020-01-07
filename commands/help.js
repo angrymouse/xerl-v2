@@ -24,7 +24,7 @@ module.exports=(args,message)=>{
       .setAuthor("Xerl Error Message",client.user.avatarURL)
       .setThumbnail(client.user.avatarURL)
       .setTitle("Manual not found")
-      .setDescription("Sorry, there isn't manual for \""+args[0]+"\" command.\nMaybe you sended not correct command? List of all commands avalible by -commands command.")
+      .setDescription("Sorry, there isn't manual for \""+args[0]+"\" command.\nMaybe you sent not correct command? List of all commands avalible by -commands command.")
     )
   }
 }
