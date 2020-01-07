@@ -1,0 +1,2 @@
+Executes xerl app.
+Usage: -a ``appname`` **``arguments``*
