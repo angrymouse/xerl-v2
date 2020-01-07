@@ -1,0 +1,2 @@
+Clears last ``n`` messages in channel
+Usage: -purge ``50`` 
