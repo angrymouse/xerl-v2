@@ -1,0 +1,2 @@
+This command needed for telling information about other commands.
+You can get info about any supported command by typing ``-help {command}``
