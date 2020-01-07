@@ -1,1 +1,1 @@
-Command to get you know all commands supported by Xerl.
+This commands tells you how to use other bot's commands
