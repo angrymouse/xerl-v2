@@ -62,7 +62,7 @@ client.on("ready", () => {
 
 })
 function processMessage(message) {
-
+if(message.author.bot||!message.guild)
     if (message.content.startsWith(p)) {
       message.content = message.content.split("\n").join(" \n")
       try {
