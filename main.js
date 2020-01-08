@@ -94,4 +94,4 @@ function processMessage(message) {
     }
 }
 client.on("message",processMessage)
-client.on("messageUpdate",processMessage)
+client.on("messageUpdate",(o,n)=>{processMessage(n)})
