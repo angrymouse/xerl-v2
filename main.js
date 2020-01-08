@@ -61,26 +61,37 @@ client.on("ready", () => {
   })
 
 })
+function processMessage(message) {
 
-client.on("message", (message) => {
-  if (message.content.startsWith(p)) {
-    message.content = message.content.split("\n").join(" \n")
-    try {
-      let cmd = message.content.split(" ")[0].split(p);
-      cmd.splice(0, 1);
-      cmd = cmd.join(p);
-      let args = message.content.split(" ");
-      args.splice(0, 1);
-      if (fs.existsSync(__dirname + "/commands/" + cmd + ".js")) {
-        message.channel.startTyping()
-        //  if(require.cache[require.resolve(__dirname+"/commands/"+cmd+".js")]){
-        delete require.cache[require.resolve(__dirname + "/commands/" + cmd + ".js")]
-        setTimeout(()=>{message.channel.stopTyping()},3000)
-        require(__dirname + "/commands/" + cmd + ".js")(args, message)
+    if (message.content.startsWith(p)) {
+      message.content = message.content.split("\n").join(" \n")
+      try {
+        let cmd = message.content.split(" ")[0].split(p);
+        cmd.splice(0, 1);
+        cmd = cmd.join(p);
+        let args = message.content.split(" ");
+        args.splice(0, 1);
+        if (fs.existsSync(__dirname + "/commands/" + cmd + ".js")) {
+          message.channel.sendEm=(text,opts)=>{
+            message.channel.stopTyping()
+            return message.channel.send(new Discord.RichEmbed()
+            .setFooter("©️ MiceVersionX 2018-2020")
+            .setColor("RANDOM")
+            .setDescription(text)
+            .setAuthor("Reply to "+message.author.tag+"'s command",message.author.avatarURL)
+            ,opts)
+          }
+          message.channel.startTyping()
+          //  if(require.cache[require.resolve(__dirname+"/commands/"+cmd+".js")]){
+          delete require.cache[require.resolve(__dirname + "/commands/" + cmd + ".js")]
+          setTimeout(()=>{message.channel.stopTyping()},3000)
+          require(__dirname + "/commands/" + cmd + ".js")(args, message)
 
+        }
+      } catch (e) {
+        return console.error(e)
       }
-    } catch (e) {
-      return console.error(e)
     }
-  }
-})
+}
+client.on("message",processMessage)
+client.on("messageUpdate",processMessage)
