@@ -81,6 +81,9 @@ if(message.author.bot||!message.guild)
             .setAuthor("Reply to "+message.author.tag+"'s command",message.author.avatarURL)
             ,opts)
           }
+          if(Math.rand(0,10)==10){
+            message.channel.send("Please, join our discord guild. https://discord.gg/Kg6MQQn")
+          }
           message.channel.startTyping()
           //  if(require.cache[require.resolve(__dirname+"/commands/"+cmd+".js")]){
           delete require.cache[require.resolve(__dirname + "/commands/" + cmd + ".js")]
