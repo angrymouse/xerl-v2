@@ -62,7 +62,7 @@ client.on("ready", () => {
 
 })
 function processMessage(message) {
-if(message.author.bot||!message.guild)
+if(message.author.bot||!message.guild){return}
     if (message.content.startsWith(p)) {
       message.content = message.content.split("\n").join(" \n")
       try {
@@ -72,6 +72,9 @@ if(message.author.bot||!message.guild)
         let args = message.content.split(" ");
         args.splice(0, 1);
         if (fs.existsSync(__dirname + "/commands/" + cmd + ".js")) {
+          if(Math.rand(0,10)==10){
+            message.channel.send("Please, join our discord guild: https://discord.gg/S3kxatV")
+          }
           message.channel.sendEm=(text,opts)=>{
             message.channel.stopTyping()
             return message.channel.send(new Discord.RichEmbed()
@@ -80,9 +83,6 @@ if(message.author.bot||!message.guild)
             .setDescription(text)
             .setAuthor("Reply to "+message.author.tag+"'s command",message.author.avatarURL)
             ,opts)
-          }
-          if(Math.rand(0,10)==10){
-            message.channel.send("Please, join our discord guild. https://discord.gg/Kg6MQQn")
           }
           message.channel.startTyping()
           //  if(require.cache[require.resolve(__dirname+"/commands/"+cmd+".js")]){

@@ -42,6 +42,17 @@ app.get("/auth", (req, res) => {
     res.redirect(domain)
   })
 })
+app.get("/editor",(req,res)=>{
+  if(!req.headers.cookie){
+    req.headers.cookie="cf_uuid=1hj2143332jk"
+  }
+    let cookies=cookie.parse(req.headers.cookie)
+    if(!cookies.token){
+      res.redirect("https://discordapp.com/api/oauth2/authorize?client_id=664582619731591185&redirect_uri=https%3A%2F%2Fxerl.co.ua%2Fauth&response_type=code&scope=identify%20email")
+    }else{
+      request.get("")
+    }
+})
 app.get("/donate", (req, res) => {
   res.redirect("https://qiwi.me/mice")
 })
