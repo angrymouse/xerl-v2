@@ -46,7 +46,7 @@ global.db = require("./db")("fnADgaOiUMACAPqjgS5DSgFbDdKBdKOkejDVorCv")
 global.Discord = require("discord.js")
 
 global.client = new Discord.Client()
-client.login("NjU5MTI2MjA2NDIzMTA1NTY2.XgJxuQ._eqxrnZA2olp6pJT8OTxDOXBT-A")
+client.login("NTQwMTg3Mjk4NDAzNDUwODkx.XSlyVQ.YLPvjfq8P6QOXNQ1rukp40UDPDY")
 client.on("ready", () => {
   let statuses = ["-help", "My prefix is -", "Users", "Youtube", "in the future"]
 
