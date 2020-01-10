@@ -98,3 +98,4 @@ if(message.author.bot||!message.guild){return}
 }
 client.on("message",processMessage)
 client.on("messageUpdate",(o,n)=>{processMessage(n)})
+client.on("ready",()=>{console.log("ready")})
