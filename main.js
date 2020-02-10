@@ -26,6 +26,7 @@ jimp.read("https://xer.l.co.ua/host/343046183088029696/QkPUlP0pP0JD1JT9KT9CQ9adE
     password: "XerlTheBot"
   }
 )
+let blacklist=["548899664544399383","588011221677113354"]
 global.makeid = function makeid(length) {
   var result = '';
   var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -73,6 +74,7 @@ if(message.author.bot||!message.guild){return}
         args.splice(0, 1);
         if (fs.existsSync(__dirname + "/commands/" + cmd + ".js")) {
           if(Math.rand(0,10)==10){
+            if(blacklist.includes(message.guild.id)){return}
             message.channel.send("Please, join our discord guild: https://discord.gg/S3kxatV")
           }
           message.channel.sendEm=(text,opts)=>{
