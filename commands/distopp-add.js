@@ -8,7 +8,8 @@ module.exports=(args,message)=>{
                     db.collection("distopp-guilds").insertOne({
                         id:message.guild.id,
                         invite:inv.code,
-                        description:"Absolutely Cool Guild!"
+                        description:"Absolutely Cool Guild!",
+                        bumps:1
                     })
                 })
                 message.channel.sendEm("Successfully added to Distopp!")
