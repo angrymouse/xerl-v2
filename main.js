@@ -1,10 +1,11 @@
 global.fs = require("fs");
 let app=require("express")()
-let port=process.env.PORT||3000
+let port=process.env.PORT||8080
 app.listen(port)
-app.get("/",(req,res)=>{res.send("Xerl is V"+require('./package.json').version)})
-global.socketEval = require('socket.io-client')("http://185.246.67.139:5555/")
+global.queue={}
+global.socketEval = require('socket.io-client')("https://xerleval-xerl-miceve.cloud.okteto.net/")
 global.jimp = require('jimp');
+global.sharp=require("sharp")
 global.request = require("request")
 jimp.read("https://xer.l.co.ua/host/343046183088029696/QkPUlP0pP0JD1JT9KT9CQ9adEPQh7EnYi6El6kp6kJlJepKepCfpSXqSnqQn6Ul6kp6kJlJepKepCfpSXqSnqQn6Ul60n4If8ynh.png")
   .then(gayFlag => {
@@ -36,6 +37,7 @@ global.makeid = function makeid(length) {
   }
   return result;
 }
+global.session=makeid(10)
 Array.prototype.random = function() {
   return this[Math.floor(Math.random() * this.length)]
 }
@@ -43,13 +45,28 @@ Math.rand = function(min, max) {
   return Math.round(min + (Math.random() * max))
 }
 let p = "-"
-global.db = require("./db")("fnADgaOiUMACAPqjgS5DSgFbDdKBdKOkejDVorCv")
-global.Discord = require("discord.js")
 
-global.client = new Discord.Client()
-client.login("NTQwMTg3Mjk4NDAzNDUwODkx.XSlyVQ.YLPvjfq8P6QOXNQ1rukp40UDPDY")
+let mongoCli = require("mongodb").MongoClient;
+let mongo = new mongoCli("mongodb://root:xerl@mongodb.xerl-miceve.svc.cluster.local:27017/", { useUnifiedTopology: true,useNewUrlParser: true });
+mongo.connect((err,dbhost)=>{
+  if(err){
+    return console.log(err);
+  }
+  global.db=dbhost.db("xerl")
+
+})
+global.Discord = require("discord.js")
+const ytdl = require('ytdl-core');
+
+const client = new Discord.Client({ ws: { properties: { $os: 'android', $browser: 'mobile', $device: 'mobile' } } })
+if(process.env.DEBUG){
+  client.login("NTQwMTg3Mjk4NDAzNDUwODkx.XlKbKw.UsAg1pqtP8XPqr8ePCmIi0U2jAg")
+}else{
+  client.login("NTQwMTg3Mjk4NDAzNDUwODkx.XlKbKw.UsAg1pqtP8XPqr8ePCmIi0U2jAg")
+}
 client.on("ready", () => {
-  let statuses = ["-help", "My prefix is -", "Users", "Youtube", "in the future"]
+  global.client=client
+  let statuses = ["$commands", "My prefix is $", "Users", "Youtube", "in the future"]
 
   setInterval(() => {
     client.user.setActivity(statuses.random(), {
@@ -63,7 +80,23 @@ client.on("ready", () => {
 
 })
 function processMessage(message) {
+  // if(message.attachments.first()){
+  //   if(message.author.id==client.user.id){return}
+  //   //console.log(message.attachments)
+  //   let attachments=[]
+  //   message.attachments.array().forEach(attachment=>{
+  //     if(attachment.width){ attachments.push(attachment.url)}
+  //
+  //   })
+  //   if(attachments.length<1){return}
+  //   client.channels.get("678308084661092365").send({files:attachments})
+  // }
 if(message.author.bot||!message.guild){return}
+db.collection("prefixes").findOne({guild:message.guild.id},(err,doc)=>{
+  if(doc==null){
+    db.collection("prefixes").insertOne({guild:message.guild.id,prefix:"$"})
+  }else{
+    let p=doc.prefix
     if (message.content.startsWith(p)) {
       message.content = message.content.split("\n").join(" \n")
       try {
@@ -73,31 +106,58 @@ if(message.author.bot||!message.guild){return}
         let args = message.content.split(" ");
         args.splice(0, 1);
         if (fs.existsSync(__dirname + "/commands/" + cmd + ".js")) {
-          if(Math.rand(0,10)==10){
-            if(blacklist.includes(message.guild.id)){return}
-            message.channel.send("Please, join our discord guild: https://discord.gg/S3kxatV")
-          }
-          message.channel.sendEm=(text,opts)=>{
-            message.channel.stopTyping()
-            return message.channel.send(new Discord.RichEmbed()
-            .setFooter("©️ MiceVersionX 2018-2020")
-            .setColor("RANDOM")
-            .setDescription(text)
-            .setAuthor("Reply to "+message.author.tag+"'s command",message.author.avatarURL)
-            ,opts)
-          }
-          message.channel.startTyping()
-          //  if(require.cache[require.resolve(__dirname+"/commands/"+cmd+".js")]){
-          delete require.cache[require.resolve(__dirname + "/commands/" + cmd + ".js")]
-          setTimeout(()=>{message.channel.stopTyping()},3000)
-          require(__dirname + "/commands/" + cmd + ".js")(args, message)
+          db.collection("profile").findOne({id:message.author.id},(err,profile)=>{
+            if(profile==null){
+              db.collection("profile").insertOne({id:message.author.id,army:{},humans:{human:5},lastTribute:0,money:0})
+              profile={id:message.author.id,army:{},humans:{human:5},lastTribute:0,money:0}
+            }
+            message.channel.sendEm=(text,opts)=>{
+              message.channel.stopTyping()
+              return message.channel.send(new Discord.RichEmbed()
+                      .setFooter("©️ MiceVersionX 2018-2020")
+                      .setColor("RANDOM")
+                      .setDescription(text)
+                      .setAuthor("Reply to "+message.author.tag+"'s command",message.author.avatarURL)
+                  ,opts)
+            }
+            message.channel.startTyping()
+            //  if(require.cache[require.resolve(__dirname+"/commands/"+cmd+".js")]){
+            delete require.cache[require.resolve(__dirname + "/commands/" + cmd + ".js")]
+            setTimeout(()=>{message.channel.stopTyping()},3000)
+            require(__dirname + "/commands/" + cmd + ".js")(args, message,profile)
+
+          })
 
         }
       } catch (e) {
         return console.error(e)
       }
     }
+  }
+})
+
 }
 client.on("message",processMessage)
 client.on("messageUpdate",(o,n)=>{processMessage(n)})
 client.on("ready",()=>{console.log("ready")})
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+app.get("/topp-api/guilds/top",(req,res)=>{
+  db.collection("distopp-guilds").find().toArray((err,guilds)=>{
+    let sorted=guilds.sort((a,b)=>{return b.bumps-a.bumps})
+    sorted.forEach((g,gi)=>{
+      if(!client.guilds.get(g.id)){
+        db.collection("distopp-guilds").findOneAndDelete({id:g.id})
+        sorted.splice(gi,1)
+
+      }else{
+        sorted[gi].icon=client.guilds.get(g.id).iconURL.split(".").slice(0,client.guilds.get(g.id).iconURL.split(".").length-1).join(".");
+        sorted[gi].name=client.guilds.get(g.id).name;
+      }
+    })
+    res.json({top:sorted})
+  })
+})

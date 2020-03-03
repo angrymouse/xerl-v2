@@ -1,0 +1,9 @@
+{
+  "human": {
+    "cost": 5,
+    "workAbility": 2,
+    "attack": 0,
+    "protect": 1,
+    "human": true
+  }
+}

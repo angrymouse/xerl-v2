@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xerl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xerl
+  template:
+    metadata:
+      labels:
+        app: xerl
+    spec:
+      containers:
+        - image: registry.gitlab.com/miceve/xerl:latest
+          name: xerl
+          resources:
+            requests:
+              memory: "3Gi"
+              cpu: "1"
+            limits:
+              memory: "4Gi"
+              cpu: "2"
+      imagePullSecrets:
+        - name: regcred
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: xerl
+  annotations:
+    dev.okteto.com/auto-ingress: "true"
+spec:
+  type: ClusterIP
+  ports:
+    - name: "xerl"
+      port: 8080
+  selector:
+    app: xerl

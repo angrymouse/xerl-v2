@@ -1,0 +1,10 @@
+{
+  "files": [
+    {"dir": false,
+    "name": "commands/me.js"
+    }
+  ],
+  "run": [
+    "sh -c patchfile.sh"
+  ]
+}

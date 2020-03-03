@@ -5,21 +5,31 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"node main.js"
+    "start": "node main.js",
+    "build": "docker build -t registry.gitlab.com/miceve/xerl .",
+    "push": "docker push registry.gitlab.com/miceve/xerl",
+    "deploy": "okteto build . -t registry.gitlab.com/miceve/xerl && kubectl delete service xerl && kubectl delete deployment xerl && kubectl apply -f deploy.yml"
   },
   "author": "Mice",
   "license": "ISC",
   "dependencies": {
     "@jimp/plugin-circle": "^0.9.3",
-
+    "archiver": "^3.1.1",
     "discord.js": "^11.5.1",
     "express": "^4.17.1",
+    "extract-zip": "^1.6.7",
     "faunadb": "^2.10.2",
     "jimp": "^0.9.3",
     "mongodb": "^3.4.1",
+    "opusscript": "0.0.7",
     "replace-color": "^2.1.0",
     "request": "^2.88.0",
+    "sharp": "^0.24.1",
     "socket.io-client": "^2.3.0",
-    "webdav-fs": "^2.0.0"
+    "unzipper": "^0.10.10",
+    "webdav-fs": "^2.0.0",
+    "yt-search": "^1.1.2",
+    "ytdl-core": "^1.0.9",
+    "ytdl-core-discord": "^1.1.0"
   }
 }
