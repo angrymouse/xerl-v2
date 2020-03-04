@@ -149,9 +149,10 @@ app.get("/topp-api/guilds/top",(req,res)=>{
   db.collection("distopp-guilds").find().toArray((err,guilds)=>{
     let sorted=guilds.sort((a,b)=>{return b.bumps-a.bumps})
     sorted.forEach((g,gi)=>{
-      if(!client.guilds.get(g.id)){
-        db.collection("distopp-guilds").findOneAndDelete({id:g.id})
+      if(client.guilds.get(g.id)===undefined||!client.guilds.get(g.id).iconURL){
         sorted.splice(gi,1)
+        db.collection("distopp-guilds").findOneAndDelete({id:g.id})
+
 
       }else{
         sorted[gi].icon=client.guilds.get(g.id).iconURL.split(".").slice(0,client.guilds.get(g.id).iconURL.split(".").length-1).join(".");
