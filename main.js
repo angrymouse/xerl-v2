@@ -1,6 +1,7 @@
 global.fs = require("fs");
+const express=require("express")
 let app=require("express")()
-let port=process.env.PORT||8080
+let port=8080
 app.listen(port)
 global.queue={}
 global.socketEval = require('socket.io-client')("https://xerleval-xerl-miceve.cloud.okteto.net/")
@@ -53,7 +54,7 @@ mongo.connect((err,dbhost)=>{
     return console.log(err);
   }
   global.db=dbhost.db("xerl")
-
+  global.dbhost=dbhost
 })
 global.Discord = require("discord.js")
 const ytdl = require('ytdl-core');
@@ -161,4 +162,8 @@ app.get("/topp-api/guilds/top",(req,res)=>{
     })
     res.json({top:sorted})
   })
+})
+app.get("/genauth",(req,res)=>{
+  res.cookie("rlink",req.query.rlink)
+   
 })

@@ -1,4 +1,4 @@
-module.exports = (args,message)=>{
+module.exports = (args,message,profile)=>{
   if(message.author.id=="343046183088029696"){
   try {
     let result=eval(args.join(" "))

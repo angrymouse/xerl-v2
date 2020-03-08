@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node main.js",
-    "build": "docker build -t registry.gitlab.com/miceve/xerl .",
-    "push": "docker push registry.gitlab.com/miceve/xerl",
+    "build": "docker build -t registry.cloud.okteto.net/xerl-miceve/xerl .",
+    "push": "docker push registry.cloud.okteto.net/xerl-miceve/xerl",
     "deploy": "okteto build . -t registry.gitlab.com/miceve/xerl && kubectl delete service xerl && kubectl delete deployment xerl && kubectl apply -f deploy.yml"
   },
   "author": "Mice",
@@ -15,6 +15,9 @@
   "dependencies": {
     "@jimp/plugin-circle": "^0.9.3",
     "archiver": "^3.1.1",
+    "canvas": "^2.6.1",
+    "cookie": "^0.4.0",
+    "d3-node": "^2.2.1",
     "discord.js": "^11.5.1",
     "express": "^4.17.1",
     "extract-zip": "^1.6.7",

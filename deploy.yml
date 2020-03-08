@@ -15,15 +15,22 @@ spec:
       containers:
         - image: registry.gitlab.com/miceve/xerl:latest
           name: xerl
+          volumeMounts:
+            - mountPath: /xerlfiles
+              name: data
           resources:
             requests:
               memory: "3Gi"
-              cpu: "1"
+              cpu: "1.5"
             limits:
-              memory: "4Gi"
-              cpu: "2"
+              memory: "3Gi"
+              cpu: "1.5"
       imagePullSecrets:
         - name: regcred
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: xerlfiles
 
 
 ---
