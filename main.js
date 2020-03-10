@@ -107,20 +107,21 @@ db.collection("prefixes").findOne({guild:message.guild.id},(err,doc)=>{
         let args = message.content.split(" ");
         args.splice(0, 1);
         if (fs.existsSync(__dirname + "/commands/" + cmd + ".js")) {
+          message.channel.sendEm=(text,opts)=>{
+            message.channel.stopTyping()
+            return message.channel.send(new Discord.RichEmbed()
+                    .setFooter("©️ MiceVersionX 2018-2020")
+                    .setColor("RANDOM")
+                    .setDescription(text)
+                    .setAuthor("Reply to "+message.author.tag+"'s command",message.author.avatarURL)
+                ,opts)
+          }
           db.collection("profile").findOne({id:message.author.id},(err,profile)=>{
             if(profile==null){
               db.collection("profile").insertOne({id:message.author.id,army:{},humans:{human:5},lastTribute:0,money:0})
               profile={id:message.author.id,army:{},humans:{human:5},lastTribute:0,money:0}
             }
-            message.channel.sendEm=(text,opts)=>{
-              message.channel.stopTyping()
-              return message.channel.send(new Discord.RichEmbed()
-                      .setFooter("©️ MiceVersionX 2018-2020")
-                      .setColor("RANDOM")
-                      .setDescription(text)
-                      .setAuthor("Reply to "+message.author.tag+"'s command",message.author.avatarURL)
-                  ,opts)
-            }
+
             message.channel.startTyping()
             //  if(require.cache[require.resolve(__dirname+"/commands/"+cmd+".js")]){
             delete require.cache[require.resolve(__dirname + "/commands/" + cmd + ".js")]
@@ -163,7 +164,41 @@ app.get("/topp-api/guilds/top",(req,res)=>{
     res.json({top:sorted})
   })
 })
+app.get("/topp-api/user/:token",(req,res)=>{
+  request.get("https://discordapp.com/api/v6/users/@me",{headers:{
+    token:req.params.token
+    },json:true},(err,resp,body)=>{
+    db.collection("profile").findOne({id:body.id},(err,profile)=>{
+      if(profile==null){
+        db.collection("profile").insertOne({id:body.id,army:{},humans:{human:5},lastTribute:0,money:0,email:body.email})
+
+      }else{
+        db.collection("profile").findOneAndUpdate({id:body.id},{$set:{email:body.email}})
+      }
+      res.json(body)
+    })
+  })
+})
 app.get("/genauth",(req,res)=>{
+  if(!req.query.rlink){return}
   res.cookie("rlink",req.query.rlink)
-   
+   res.redirect("https://discordapp.com/api/oauth2/authorize?client_id=540187298403450891&redirect_uri=https%3A%2F%2Fxerl-xerl-miceve.cloud.okteto.net%2Fauth&response_type=code&scope=identify%20email%20connections")
+})
+app.get("/auth",(req,res)=>{
+  console.log(req,req.query)
+  if(!req.headers.cookie){return res.send("not ok!")}
+  let cookies=require("cookie").parse(req.headers.cookie)
+  if(!cookies.rlink||cookies.rlink==""){return res.send("not ok!")}
+  if(!req.query.code){return res.send("not ok!")}
+
+  request.post("https://discordapp.com/api/oauth2/token",{form:
+        {code:req.query.code,
+          client_id:"540187298403450891",
+          client_secret:"nwxh37o6KUfLAKSyg6jA9f2r8ryjgVhI",
+          grant_type:"authorization_code",
+          redirect_uri:"https://xerl-xerl-miceve.cloud.okteto.net/auth",
+          scope:"identify"},json:true},(err,head,body)=>{
+  res.redirect(cookies.rlink+"#xc:"+body.access_token)
+  })
+
 })

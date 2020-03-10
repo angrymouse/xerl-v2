@@ -9,6 +9,6 @@ module.exports=(args,message)=>{
       .setAuthor("Xerl Commands",[message.author.avatarURL,client.user.avatarURL].random())
       .setTitle("Xerl have "+commands.length+" commands")
       .setDescription(commands.join("\n"))
-      .addField("How to use this commands!1!?/","You can get info about any command from list by typing ``-help {command}``")
+      .addField("How to use this commands!1!?/","You can get info about any command from list by typing ``-help {command}\nAlso, if you have a question, you can join our support guild: https://discord.gg/dFd7vxG``")
     )
 }

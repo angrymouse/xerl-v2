@@ -13,7 +13,7 @@ module.exports=(args,message)=>{
       if(args[0]=="help"){
         emb.addField(
               "Okay, i can get info about commands, but where is list of supported commands?",
-              "If you want to get list of all supported commands just type command ``-commands``."
+              "If you want to get list of all supported commands just type command ``-commands``.\nAlso, if you have a question, you can join our support guild: https://discord.gg/dFd7vxG"
               )
       }
       message.channel.send(emb)
