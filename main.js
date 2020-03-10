@@ -166,7 +166,7 @@ app.get("/topp-api/guilds/top",(req,res)=>{
 })
 app.get("/topp-api/user/:token",(req,res)=>{
   request.get("https://discordapp.com/api/v6/users/@me",{headers:{
-    token:req.params.token
+    authorization:"Bearer "+req.params.token
     },json:true},(err,resp,body)=>{
     db.collection("profile").findOne({id:body.id},(err,profile)=>{
       if(profile==null){
