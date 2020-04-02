@@ -1,2 +1,3 @@
-module.exports=(args,message)=>{
-    message.channel.sendEm(global.session)}
+module.exports = (args, message) => {
+    message.channel.sendEm(global.session)
+};

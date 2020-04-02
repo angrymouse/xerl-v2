@@ -1,0 +1,12 @@
+{
+    "id": null,
+    "cost": 0,
+    "actions": {
+        "buy": [],
+        "expire": [],
+        "sell": []
+    },
+    "neededRole": null,
+    "name": "",
+    "description": ""
+}

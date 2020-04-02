@@ -15,9 +15,6 @@ spec:
       containers:
         - image: registry.gitlab.com/miceve/xerl:latest
           name: xerl
-          volumeMounts:
-            - mountPath: /xerlfiles
-              name: data
           resources:
             requests:
               memory: "3Gi"
@@ -27,10 +24,7 @@ spec:
               cpu: "1.5"
       imagePullSecrets:
         - name: regcred
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: xerlfiles
+
 
 
 ---

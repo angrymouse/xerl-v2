@@ -16,23 +16,18 @@
     "@jimp/plugin-circle": "^0.9.3",
     "archiver": "^3.1.1",
     "canvas": "^2.6.1",
+    "cheerio": "^1.0.0-rc.3",
     "cookie": "^0.4.0",
     "d3-node": "^2.2.1",
-    "discord.js": "^11.5.1",
+    "discord.js": "^11.6.2",
     "express": "^4.17.1",
     "extract-zip": "^1.6.7",
-    "faunadb": "^2.10.2",
     "jimp": "^0.9.3",
     "mongodb": "^3.4.1",
-    "opusscript": "0.0.7",
-    "replace-color": "^2.1.0",
     "request": "^2.88.0",
     "sharp": "^0.24.1",
     "socket.io-client": "^2.3.0",
     "unzipper": "^0.10.10",
-    "webdav-fs": "^2.0.0",
-    "yt-search": "^1.1.2",
-    "ytdl-core": "^1.0.9",
-    "ytdl-core-discord": "^1.1.0"
+    "webdav-fs": "^2.0.0"
   }
 }
