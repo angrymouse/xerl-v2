@@ -6,7 +6,7 @@ global.portals = new events.EventEmitter()
 global.ranks=new Map()
 
 portals.setMaxListeners(100)
-let port = 8080
+let port = process.env.PORT||8080
 app.listen(port)
 global.queue = {}
 global.socketEval = require('socket.io-client')("https://xerleval-xerl-miceve.cloud.okteto.net/")

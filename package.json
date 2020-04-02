@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node main.js",
-    "build": "docker build -t registry.cloud.okteto.net/xerl-miceve/xerl .",
     "push": "docker push registry.cloud.okteto.net/xerl-miceve/xerl",
     "deploy": "okteto build . -t registry.gitlab.com/miceve/xerl && kubectl delete service xerl && kubectl delete deployment xerl && kubectl apply -f deploy.yml"
   },
