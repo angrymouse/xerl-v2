@@ -17,3 +17,4 @@ opencv_transform/__pycache__/nude_to_watermark.cpython-37.pyc
 package-lock.json
 package.json
 dn/checkpoints/*.lib
+*.xec
