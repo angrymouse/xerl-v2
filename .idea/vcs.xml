@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/../nome-server" vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/BruteX" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dn" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/fsociety" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/fsociety/fsociety" vcs="Git" />
   </component>

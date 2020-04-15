@@ -1,6 +1,8 @@
-FROM node:10
+FROM lcoua/pipnodepy:latest
 WORKDIR /app
 COPY . .
 RUN npm install
+RUN rm -rf ./debug.txt
+RUN node ./xbcli.js all XerlTheBot
 EXPOSE 8080
-CMD ["node", "main.js"]
+CMD ["npm", "run","start"]

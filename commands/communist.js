@@ -15,7 +15,7 @@ module.exports = (args, message) => {
         )
     }
     let url;
-    if (!message.attachments.first()) {
+    if (!message.attachments.first()||message.attachments.first()==null) {
 
         url = message.mentions.members.first().user.avatarURL
     } else {

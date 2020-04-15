@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../nome-server/.idea/nome-server.iml" filepath="$PROJECT_DIR$/../nome-server/.idea/nome-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/xerl.iml" filepath="$PROJECT_DIR$/.idea/xerl.iml" />
     </modules>
   </component>

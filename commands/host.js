@@ -1,4 +1,4 @@
-module.exports = (args, message) => {
+module.exports = async (args, message) => {
     //global.jimp=require('jimp');
     //console.log(message.attachments.first());
     if (!message.attachments.first()) {
@@ -15,8 +15,8 @@ module.exports = (args, message) => {
         )
     }
 
-
-    wfs.stat("/host/" + message.author.id, (e, d) => {
+    let msg=await message.channel.send("Uploading to Xerl :tm: Host ...\n This can take 1 minute")
+    wfs.stat("/host/" + message.author.id, async (e, d) => {
         if (!d) {
             wfs.mkdir("/host/" + message.author.id, () => {
                 request.get(message.attachments.first().url, {encoding: null}, (err, res, cnt) => {
@@ -25,12 +25,18 @@ module.exports = (args, message) => {
 
             })
         } else {
+
             request.get(message.attachments.first().url, {encoding: null}, (err, res, cnt) => {
-                wfs.writeFile("/host/" + message.author.id + "/" + message.attachments.first().filename, cnt, null)
+
+                wfs.writeFile("/host/" + message.author.id + "/" + message.attachments.first().filename, cnt, (err)=>{
+                    if(!err){
+                        msg.edit(new Discord.RichEmbed().setColor("BLUE")
+                            .setDescription("Uploaded file to Xerl Host successfully!\nLink: https://xer.l.co.ua/host/" + message.author.id + "/" + message.attachments.first().filename))
+                    }
+                })
             })
         }
-        message.channel.send(new Discord.RichEmbed().setColor("BLUE")
-            .setDescription("Uploaded file to Xerl Host successfully!\nLink: https://xer.l.co.ua/host/" + message.author.id + "/" + message.attachments.first().filename))
+
     })
 
 
